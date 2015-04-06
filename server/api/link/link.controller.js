@@ -6,6 +6,22 @@ var User = require('../user/user.model');
 
 var request = require('request');
 var cheerio = require('cheerio');
+var beagle = require('beagle');
+
+beagle.scrape("http://www.nytimes.com/2015/04/05/world/europe/a-norway-town-and-its-pipeline-to-jihad-in-syria.html?hp&action=click&pgtype=Homepage&module=first-column-region&region=top-news&WT.nav=top-news&_r=0", function(err, bone){
+    console.log(bone.preview);
+    console.log(bone.favicon);
+    console.log(bone.preview);
+    console.log(bone.favicon);
+    console.log(bone.url);
+    console.log(bone.origin);
+    // console.log(bone.protocol);
+    // console.log(bone.host);
+    // console.log(bone.port);
+    // console.log(bone.path);
+
+
+});
 
 
 
@@ -29,11 +45,11 @@ exports.show = function(req, res) {
 // Creates a new link in the DB.
 
 exports.create = function(req, res) {
-  request(req.body.url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-       var $ = cheerio.load(body);
-       var title = $('head title').text(); // this is the title
-       var favicon = $('head link').attr('href');
+  beagle.scrape(req.body.url, function(err, bone){
+    var title = bone.preview;
+    var favicon = bone.favicon;
+    if (favicon[0] === '/' && favicon[1] !=='/'){
+      favicon = bone.origin + favicon;
     }
     Link.create({url: req.body.url, favicon: favicon, title: title}, function(err, link) {
       User.findById(req.body._id, function (err, user) {

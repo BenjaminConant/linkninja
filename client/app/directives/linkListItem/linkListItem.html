@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="link">
-            <div class="favicon">
-                <img ng-src="{{link.favicon}}" />
-            </div>
             <a href="{{link.url}}" target="_blank">
+                <div class="favicon">
+                    <img ng-src="{{link.favicon}}" />
+                </div>
                 <div class="info">
                     <div class="domain">{{link.url | urlFilter}}</div>
-                    <div class="title">{{link.title}}</div>
+                    <div class="title">{{link.title | limitTo: 150}}{{link.title.length >= 150  ? '...' : ''}}</div>
                 </div>
             </a>
             <div class="actions">
