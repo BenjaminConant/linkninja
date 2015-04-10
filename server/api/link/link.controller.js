@@ -45,6 +45,7 @@ exports.show = function(req, res) {
 // Creates a new link in the DB.
 
 exports.create = function(req, res) {
+  console.log("THIS IS THE ID!!! ________________________________________________|||||",req.body._id);  
   beagle.scrape(req.body.url, function(err, bone){
     var title = bone.preview;
     var favicon = bone.favicon;
