@@ -52,7 +52,7 @@ exports.create = function(req, res) {
     if (favicon[0] === '/' && favicon[1] !=='/'){
       favicon = bone.origin + favicon;
     }
-    Link.create({url: req.body.url, favicon: favicon, title: title}, function(err, link) {
+    Link.create({url: req.body.url, favicon: favicon, title: title, userId: req.body._id}, function(err, link) {
       User.findById(req.body._id, function (err, user) {
         user.links.push(link._id);
         user.save(function(err){

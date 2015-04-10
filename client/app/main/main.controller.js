@@ -10,6 +10,13 @@ angular.module('linkninjaApp')
       $scope.user = user;
       $scope.userLinks = $scope.user.links;
       socket.syncUpdates('user', $scope.user);
+
+    socket.socket.on('link:save:'+$scope.user._id, function(data){
+      console.log(data);
+      $scope.userLinks.push(data);
+    })
+
+
     });
 
     $scope.createLink = function() {
@@ -21,9 +28,7 @@ angular.module('linkninjaApp')
       });
     }
 
-    socket.socket.on('link:save', function(data){
-      $scope.userLinks.push(data);
-    })
+   
 
 
 

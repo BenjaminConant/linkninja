@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 var LinkSchema = new Schema({
   url: String,
   favicon: String,
-  title: String
+  title: String, 
+  userId: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 module.exports = mongoose.model('Link', LinkSchema);
