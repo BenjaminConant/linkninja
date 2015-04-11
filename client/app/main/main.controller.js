@@ -1,13 +1,25 @@
 'use strict';
 
 angular.module('linkninjaApp')
-  .controller('MainCtrl', function ($scope, $http, socket, $state, Auth, $location, User, link) {
+  .controller('MainCtrl', function ($scope, $http, socket, $state, Auth, $location, User, link, $cookieStore) {
     $scope.newLink = {};
     $scope.userLinks = {};
     User.get().$promise.then(function(user){    
       console.log(user);
       $scope.newLink._id = user._id;
-      $scope.userLinks = user.links;
+      console.log('userid', user._id);
+      $cookieStore.put('id', user._id);
+      console.log($cookieStore.get('id'));
+      $scope.user = user;
+      $scope.userLinks = $scope.user.links;
+      socket.syncUpdates('user', $scope.user);
+
+    socket.socket.on('link:save:'+$scope.user._id, function(data){
+      console.log(data);
+      $scope.userLinks.push(data);
+    })
+
+
     });
 
     $scope.createLink = function() {
@@ -18,6 +30,8 @@ angular.module('linkninjaApp')
         $scope.newLink.url = "";
       });
     }
+
+   
 
 
 

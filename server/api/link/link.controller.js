@@ -45,13 +45,14 @@ exports.show = function(req, res) {
 // Creates a new link in the DB.
 
 exports.create = function(req, res) {
+  console.log("THIS IS THE ID!!! ________________________________________________|||||",req.body._id);  
   beagle.scrape(req.body.url, function(err, bone){
     var title = bone.preview;
     var favicon = bone.favicon;
     if (favicon[0] === '/' && favicon[1] !=='/'){
       favicon = bone.origin + favicon;
     }
-    Link.create({url: req.body.url, favicon: favicon, title: title}, function(err, link) {
+    Link.create({url: req.body.url, favicon: favicon, title: title, userId: req.body._id}, function(err, link) {
       User.findById(req.body._id, function (err, user) {
         user.links.push(link._id);
         user.save(function(err){

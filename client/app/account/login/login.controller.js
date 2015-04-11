@@ -4,9 +4,7 @@ angular.module('linkninjaApp')
   .controller('LoginCtrl', function ($scope, Auth, $location, $window, $state) {
     $scope.user = {};
     $scope.errors = {};
-    console.log(Auth.getCurrentUser());
-    console.log(Auth.getCurrentUser()._id);
-
+   
     $scope.login = function(form) {
       $scope.submitted = true;
 
