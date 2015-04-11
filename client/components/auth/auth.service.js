@@ -26,6 +26,9 @@ angular.module('linkninjaApp')
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
+          console.log(data);
+          
+
           currentUser = User.get();
           deferred.resolve(data);
           return cb();
